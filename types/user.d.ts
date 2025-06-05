@@ -15,10 +15,11 @@ type MobileLoginVO = {
 type UserVO = {
   id: number
   mobile: string
-  nickname: string
+  username: string
   avatar: string
   gender: number
   createTime: string
+  email: string
 }
 type AccountLoginDTO = {
   username: string
