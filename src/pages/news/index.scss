@@ -1,0 +1,234 @@
+/* 全局变量 */
+$primary-color: #6190E8;
+$secondary-color: #78C3FB;
+$text-color: #333;
+$light-text: #666;
+$border-color: #eee;
+$card-shadow: 0 8rpx 30rpx rgba(0,0,0,0.08);
+$header-height: 320rpx;
+
+/* 详情页样式 */
+.news-detail-container {
+  position: relative;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  padding-bottom: 40rpx;
+}
+
+/* 封面图片 */
+.cover-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $header-height;
+  z-index: 1;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80rpx;
+    background: linear-gradient(to top, #f5f7fa, transparent);
+  }
+}
+
+/* 返回按钮 */
+.back-button {
+  position: fixed;
+  top: 80rpx;
+  left: 30rpx;
+  width: 80rpx;
+  height: 80rpx;
+  background: rgba(0,0,0,0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  backdrop-filter: blur(10rpx);
+}
+
+/* 内容卡片 */
+.content-card {
+  position: relative;
+  z-index: 2;
+  background: #fff;
+  border-radius: 32rpx 32rpx 0 0;
+
+  padding: 40rpx 32rpx;
+  box-shadow: $card-shadow;
+}
+
+.title-section {
+  text-align: center;
+  padding-bottom: 30rpx;
+  border-bottom: 1rpx solid $border-color;
+  margin-bottom: 40rpx;
+
+  .title {
+
+    font-size: 44rpx;
+    font-weight: 700;
+    line-height: 1.5;
+    color: $text-color;
+    margin-bottom: 24rpx;
+  }
+
+  .meta {
+    display: flex;
+ justify-content: center;
+  align-items: center;     
+
+    .date {
+      font-size: 28rpx;
+      color: $light-text;
+      display: flex;
+
+
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 8rpx;
+        height: 8rpx;
+        background: $primary-color;
+        border-radius: 50%;
+        margin-right: 12rpx;
+      }
+    }
+  }
+}
+
+/* 富文本内容美化 */
+.rich-content {
+  font-size: 32rpx;
+  line-height: 1.8;
+  color: #444;
+
+  // 段落样式
+  p {
+    margin: 30rpx 0;
+    text-align: justify;
+  }
+
+  // 图片样式
+  img {
+    display: block;
+    max-width: 100%;
+    margin: 40rpx auto;
+    border-radius: 16rpx;
+    box-shadow: 0 6rpx 20rpx rgba(0,0,0,0.1);
+  }
+
+  // 标题样式
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    margin: 50rpx 0 30rpx;
+    color: $text-color;
+  }
+
+  h1 { font-size: 40rpx; }
+  h2 { font-size: 38rpx; }
+  h3 { font-size: 36rpx; }
+  h4 { font-size: 34rpx; }
+
+  // 列表样式
+  ul, ol {
+    padding-left: 50rpx;
+    margin: 30rpx 0;
+
+    li {
+      margin: 20rpx 0;
+      padding-left: 20rpx;
+    }
+  }
+
+  ul li {
+    list-style-type: disc;
+  }
+
+  ol li {
+    list-style-type: decimal;
+  }
+
+  // 引用样式
+  blockquote {
+    border-left: 8rpx solid $secondary-color;
+    background: #f0f7ff;
+    padding: 30rpx 40rpx;
+    margin: 40rpx 0;
+    border-radius: 0 16rpx 16rpx 0;
+
+    p {
+      margin: 0;
+      color: $light-text;
+    }
+  }
+
+  // 表格样式
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 40rpx 0;
+    border-radius: 16rpx;
+    overflow: hidden;
+    box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+
+    th, td {
+      padding: 24rpx 30rpx;
+      text-align: left;
+      border: 1rpx solid $border-color;
+    }
+
+    th {
+      background: #f0f7ff;
+      font-weight: 600;
+      color: $primary-color;
+    }
+  }
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+/* 错误状态 */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  padding: 40rpx;
+
+  .error-text {
+    font-size: 36rpx;
+    color: #F56C6C;
+    margin: 40rpx 0 60rpx;
+  }
+
+  .back-button {
+    position: relative;
+    background: $primary-color;
+    color: #fff;
+    padding: 20rpx 50rpx;
+    border-radius: 50rpx;
+    font-size: 32rpx;
+    display: flex;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+
+    text {
+      margin-left: 10rpx;
+    }
+  }
+}

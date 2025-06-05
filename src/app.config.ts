@@ -6,6 +6,11 @@ export default defineAppConfig({
     'pages/userinfo/index',
     'pages/scene/index',
     'pages/register/index',
+    'pages/concerning/index',
+    'pages/individual/index',
+    'pages/recording/index',
+    'pages/revise/index',
+    'pages/news/index',
   ],
   window: {
     backgroundTextStyle: 'light',
