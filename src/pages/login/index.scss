@@ -1,0 +1,143 @@
+.loginPage {
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+
+  .top {
+    .title {
+      font-size: 48px;
+      color: #000;
+      margin-bottom: 30px;
+    }
+
+    .info {
+      font-size: 24px;
+      color: #999;
+    }
+  }
+
+  .form {
+    padding: 80px 0;
+
+    .input {
+      width: 100%;
+      height: 100px;
+      font-size: 28px;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 20px;
+    }
+
+    .code {
+      display: flex;
+      align-items: center;
+      height: 100px;
+      justify-content: space-between;
+      border-bottom: 1px solid #ddd;
+
+      .password {
+        flex: 1;
+        height: 80px;
+        font-size: 28px;
+        margin-bottom: 20px;
+      }
+
+      .btn {
+        border: 1px solid #d2d2d2;
+        padding: 10px 40px;
+        border-radius: 10px;
+        font-size: 24px;
+        color: #333;
+        text-align: center;
+      }
+    }
+
+    .button {
+      margin-top: 60px;
+      border-radius: 10px;
+      font-size: 32px;
+      background: linear-gradient(to right, #4876e0, #0ca0ed);
+      color: #fff;
+    }
+
+    .extra {
+      flex: 1;
+      padding: 100px 70px 0;
+
+      .caption {
+        width: 440px;
+        line-height: 1;
+        border-top: 1px solid #ddd;
+        font-size: 26px;
+        color: #999;
+        position: relative;
+
+        text {
+          transform: translate(-40%);
+          background-color: #fff;
+          position: absolute;
+          top: -12px;
+          left: 50%;
+        }
+      }
+
+      .options {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 70px;
+      }
+
+      .icon {
+        font-size: 24px;
+        color: #444;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &::before {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 80px;
+          height: 80px;
+          margin-bottom: 6px;
+          font-size: 40px;
+          border: 1px solid #444;
+          border-radius: 50%;
+        }
+      }
+
+      .icon-weixin::before {
+        border-color: #1296db;
+        color: #1296db;
+      }
+    }
+
+    .switch {
+      margin-top: 20px;
+      color: #0ca0ed;
+    }
+
+    .register {
+      text-align: center;
+      margin-top: 80px;
+
+      .register-btn {
+        margin-top: 50px;
+        color: #1296db;
+        text-decoration: underline;
+      }
+    }
+
+  }
+
+  .tips {
+    position: absolute;
+    bottom: 80px;
+    left: 20px;
+    right: 20px;
+    font-size: 22px;
+    color: #999;
+    text-align: center;
+  }
+}
