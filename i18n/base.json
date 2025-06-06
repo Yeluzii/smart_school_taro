@@ -1,0 +1,11 @@
+{
+	"ios": {
+		"name": "CloverField"
+	},
+	"android": {
+		"name": "CloverField"
+	},
+	"common": {
+		"name": "CloverField"
+	}
+}

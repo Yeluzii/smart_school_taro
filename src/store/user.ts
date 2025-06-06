@@ -5,10 +5,11 @@ import Taro from '@tarojs/taro'
 const userInfo: UserVO = Taro.getStorageSync('user') || {
   id: 0,
   mobile: '',
-  nickname: '',
+  username: '',
   avatar: '',
   gender: 0,
   createTime: '',
+  email: '',
 }
 export const userSlice = createSlice({
   name: 'user',
@@ -23,10 +24,11 @@ export const userSlice = createSlice({
       state.userInfo = {
         id: 0,
         mobile: '',
-        nickname: '',
+        username: '',
         avatar: '',
         gender: 0,
         createTime: '',
+        email: '',
       }
       logout()
       Taro.removeStorageSync('token')

@@ -8,13 +8,14 @@
     "es6": false,
     "enhance": false,
     "compileHotReLoad": false,
-    "postcss": false,
+    "postcss": true,
     "minified": false,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
-    }
+    },
+    "condition": true
   },
   "compileType": "miniprogram",
   "libVersion": "3.8.7",
@@ -27,5 +28,9 @@
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
+  },
+  "projectArchitecture": "multiPlatform",
+  "simulatorPluginLibVersion": {
+    "wxext14566970e7e9f62": "3.6.5-34"
   }
 }
