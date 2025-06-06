@@ -43,6 +43,7 @@
   },
   "author": "",
   "dependencies": {
+    "@babel/plugin-proposal-decorators": "^7.27.1",
     "@babel/runtime": "^7.24.4",
     "@reduxjs/toolkit": "^2.7.0",
     "@tarojs/components": "4.0.9",

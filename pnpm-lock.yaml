@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@babel/plugin-proposal-decorators':
+        specifier: ^7.27.1
+        version: 7.27.1(@babel/core@7.27.4)
       '@babel/runtime':
         specifier: ^7.24.4
         version: 7.27.4
@@ -9158,7 +9161,7 @@ snapshots:
       '@babel/template': 7.27.2
       '@react-native/babel-plugin-codegen': 0.73.4(@babel/preset-env@7.27.2(@babel/core@7.27.4))
       babel-plugin-transform-flow-enums: 0.0.2(@babel/core@7.27.4)
-      react-refresh: 0.14.0
+      react-refresh: 0.14.2
     transitivePeerDependencies:
       - '@babel/preset-env'
       - supports-color
@@ -13189,7 +13192,7 @@ snapshots:
       '@babel/register': 7.27.1(@babel/core@7.27.4)
       babel-core: 7.0.0-bridge.0(@babel/core@7.27.4)
       colors: 1.4.0
-      flow-parser: 0.121.0
+      flow-parser: 0.206.0
       graceful-fs: 4.2.11
       micromatch: 3.1.10
       neo-async: 2.6.2
