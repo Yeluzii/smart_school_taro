@@ -4,6 +4,7 @@ import { Swiper, SwiperItem, ScrollView, View, Image, Text } from '@tarojs/compo
 import { AtIcon, AtNoticebar } from 'taro-ui' // 引入Taro UI组件
 import { fetchBannerNews, fetchAnnouncement, fetchCampusNews } from '@/service/news'
 import './index.scss'
+import { useAppSelector } from '@/store'
 
 interface NewsVO {
   id: number
@@ -14,6 +15,7 @@ interface NewsVO {
 }
 
 export default function NewsHomePage() {
+  const userInfo = useAppSelector(state => state.user.userInfo)
   const [banners, setBanners] = useState<NewsVO[]>([])
   const [announcements, setAnnouncements] = useState<NewsVO[]>([])
   const [campusNews, setCampusNews] = useState<NewsVO[]>([])
@@ -33,7 +35,7 @@ export default function NewsHomePage() {
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [userInfo])
 
   // 跳转详情
   const goToDetail = (id: number) => {
