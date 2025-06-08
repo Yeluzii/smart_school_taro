@@ -44,7 +44,7 @@ export default function My() {
         <View className="user-info">
           <AtAvatar className="avatar" circle image={userInfo.avatar} />
           <View className="user-details">
-            <View className="name">{userInfo.username}</View>
+            <View className="name">{userInfo.realName}</View>
             <View className="family">手机号：{userInfo.mobile}</View>
           </View>
         </View>

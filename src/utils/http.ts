@@ -1,18 +1,18 @@
-import Taro from "@tarojs/taro";
+import Taro from '@tarojs/taro'
 
-const baseURL = process.env.TARO_APP_API_BASE_URL;
+const baseURL = process.env.TARO_APP_API_BASE_URL
 
 type Data<T> = {
-  code: number;
-  msg: string;
-  data: T;
-};
+  code: number
+  msg: string
+  data: T
+}
 
 export const http = <T>(options: {
-  url: string;
-  method: "GET" | "POST" | "PUT" | "DELETE";
-  data?: any;
-  header?: any;
+  url: string
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE'
+  data?: any
+  header?: any
 }) => {
   return new Promise<Data<T>>((resolve, reject) => {
     Taro.request({
@@ -21,57 +21,58 @@ export const http = <T>(options: {
         if (res.statusCode >= 200 && res.statusCode < 300) {
           if (res.data.code === 401) {
             Taro.showToast({
-              icon: "error",
-              title: res.data.msg || "请求错误",
-            });
-            Taro.navigateTo({ url: "/pages/login/index" });
-            reject(res);
+              icon: 'error',
+              title: res.data.msg || '请求错误',
+            })
+            Taro.navigateTo({ url: '/pages/login/index' })
+            reject(res)
           } else if (res.data.code === 0) {
-            resolve(res.data as Data<T>);
+            console.log('Response data:', res.data)
+            resolve(res.data as Data<T>)
           } else {
             Taro.showToast({
-              icon: "error",
-              title: res.data.msg || "请求错误",
-            });
+              icon: 'error',
+              title: res.data.msg || '请求错误',
+            })
           }
         } else {
           Taro.showToast({
-            icon: "error",
-            title: res.data.msg || "请求错误",
-          });
-          reject(res);
+            icon: 'error',
+            title: res.data.msg || '请求错误',
+          })
+          reject(res)
         }
       },
       fail(err) {
         Taro.showToast({
-          icon: "none",
-          title: "网络错误",
-        });
-        reject(err);
+          icon: 'none',
+          title: '网络错误',
+        })
+        reject(err)
       },
-    });
-  });
-};
+    })
+  })
+}
 
 const httpInterceptor = function (chain) {
-  const requestParams = chain.requestParams;
-  const { url } = requestParams;
+  const requestParams = chain.requestParams
+  const { url } = requestParams
 
-  if (!url.startsWith("http")) {
-    requestParams.url = baseURL + url;
+  if (!url.startsWith('http')) {
+    requestParams.url = baseURL + url
   }
 
   requestParams.header = {
     ...requestParams.header,
-  };
-
-  const token = Taro.getStorageSync("token") || "no-token";
-  if (token) {
-    requestParams.header.Authorization = token;
   }
-  return chain.proceed(requestParams).then((res) => {
-    return res;
-  });
-};
 
-Taro.addInterceptor(httpInterceptor);
+  const token = Taro.getStorageSync('token') || 'no-token'
+  if (token) {
+    requestParams.header.Authorization = token
+  }
+  return chain.proceed(requestParams).then(res => {
+    return res
+  })
+}
+
+Taro.addInterceptor(httpInterceptor)
