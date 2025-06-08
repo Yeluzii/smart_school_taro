@@ -224,17 +224,6 @@ const Login = () => {
         >
           {loginType === 'mobile' ? '切换到账号登录' : '切换到验证码登录'}
         </View>
-        <View className="register">
-          <Text>
-            没有账号？
-            <Text
-              className="register-btn"
-              onClick={() => Taro.navigateTo({ url: '/pages/register/index' })}
-            >
-              去注册
-            </Text>
-          </Text>
-        </View>
         <View className="tips">登录/注册即视为同意《服务条款》和《隐私协议》</View>
       </View>
     </View>
