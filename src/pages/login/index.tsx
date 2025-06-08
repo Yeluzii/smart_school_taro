@@ -63,11 +63,13 @@ const Login = () => {
   const dispatch = useAppDispatch()
   const getLoginUserInfo = async () => {
     const res = await getUserInfo()
+    console.log('Get user info response:', res)
     if (res.code === 0) {
+      console.log('User info data:', res.data)
       dispatch(setUserInfo(res.data))
-      console.log(res.data)
       Taro.setStorageSync('user', res.data)
     } else {
+      console.error('Failed to get user info:', res.msg)
       Taro.showToast({
         title: res.msg,
         icon: 'none',
@@ -217,13 +219,14 @@ const Login = () => {
           </View>
         </View> */}
         <View
-          className='switch'
+          className="switch"
           onClick={() => setLoginType(loginType === 'mobile' ? 'account' : 'mobile')}
         >
           {loginType === 'mobile' ? '切换到账号登录' : '切换到验证码登录'}
         </View>
         <View className="register">
-          <Text>没有账号？
+          <Text>
+            没有账号？
             <Text
               className="register-btn"
               onClick={() => Taro.navigateTo({ url: '/pages/register/index' })}
