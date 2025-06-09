@@ -10,6 +10,7 @@ export default defineAppConfig({
     'pages/recording/index',
     'pages/revise/index',
     'pages/news/index',
+    'pages/changepassword/index',
   ],
   window: {
     backgroundTextStyle: 'light',
