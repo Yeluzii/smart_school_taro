@@ -23,7 +23,6 @@ export default function NewsDetailPage() {
     fetchNewsDetails(id)
       .then(res => {
         if (res.code === 0) {
-          // 处理富文本内容中的图片和表格显示问题
           const processedContent = processRichText(res.data.content)
           setNews({ ...res.data, content: processedContent })
         } else {
@@ -46,7 +45,6 @@ export default function NewsDetailPage() {
       // 提取 alt
       const altMatch = attrs.match(/alt=["']([^"']*)["']/)
       const alt = altMatch ? altMatch[1] : ''
-
       // 移除原有样式
       const cleanAttrs = attrs
         .replace(/\sstyle\s*=\s*(["'])[^"']*\1/gi, '')
