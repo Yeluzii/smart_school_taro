@@ -49,3 +49,13 @@ type TenantVO = {
   id: number
   tenantName: string
 }
+// user.d.ts
+export type ChangePasswordDTO = {
+  newPassword: string
+}
+
+export interface Result<T> {
+  code: number
+  message: string
+  data: T
+}
