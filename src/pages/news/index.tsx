@@ -23,7 +23,9 @@ export default function NewsDetailPage() {
     fetchNewsDetails(id)
       .then(res => {
         if (res.code === 0) {
-          setNews(res.data)
+          // 处理富文本内容中的图片和表格显示问题
+          const processedContent = processRichText(res.data.content)
+          setNews({ ...res.data, content: processedContent })
         } else {
           Taro.showToast({
             title: '新闻加载失败',
@@ -33,6 +35,61 @@ export default function NewsDetailPage() {
       })
       .finally(() => setLoading(false))
   }, [id])
+
+  // 处理富文本中的图片和表格
+  const processRichText = (content: string) => {
+    // 1. 处理图片
+    let processed = content.replace(/<img\s+([^>]*?)\/?>/g, (match, attrs) => {
+      // 提取 src
+      const srcMatch = attrs.match(/src=["']([^"']+)["']/)
+      const src = srcMatch ? srcMatch[1] : ''
+      // 提取 alt
+      const altMatch = attrs.match(/alt=["']([^"']*)["']/)
+      const alt = altMatch ? altMatch[1] : ''
+
+      // 移除原有样式
+      const cleanAttrs = attrs
+        .replace(/\sstyle\s*=\s*(["'])[^"']*\1/gi, '')
+        .replace(/\swidth\s*=\s*(["'])[^"']*\1/gi, '')
+        .replace(/\sheight\s*=\s*(["'])[^"']*\1/gi, '')
+
+      return `<img ${cleanAttrs} src="${src}" alt="${alt}" style="max-width:100%!important;height:auto!important;display:block;margin:20px auto;max-height:300rpx!important;" />`
+    })
+
+    // 2. 处理表格
+    processed = processed.replace(/<table\s*([^>]*)>/gi, (match, attrs) => {
+      // 移除原有样式和宽度设置
+      const cleanAttrs = attrs
+        .replace(/\sstyle\s*=\s*(["'])[^"']*\1/gi, '')
+        .replace(/\swidth\s*=\s*(["'])[^"']*\1/gi, '')
+
+      return `<table style="width:100%!important;border-collapse:collapse;margin:20px 0;${cleanAttrs}" >`
+    })
+
+    // 3. 处理表格单元格
+    processed = processed.replace(/<(th|td)\s*([^>]*)>/gi, (match, tag, attrs) => {
+      // 移除原有样式和宽度设置
+      const cleanAttrs = attrs
+        .replace(/\sstyle\s*=\s*(["'])[^"']*\1/gi, '')
+        .replace(/\swidth\s*=\s*(["'])[^"']*\1/gi, '')
+        .replace(/\scolspan\s*=\s*(["'])[^"']*\1/gi, '')
+        .replace(/\srowspan\s*=\s*(["'])[^"']*\1/gi, '')
+
+      return `<${tag} style="border:1px solid #ddd;padding:10px;text-align:left;${cleanAttrs}" >`
+    })
+
+    // 4. 处理表格标题单元格
+    processed = processed.replace(/<th\s*([^>]*)>/gi, (match, attrs) => {
+      // 移除原有样式和宽度设置
+      const cleanAttrs = attrs
+        .replace(/\sstyle\s*=\s*(["'])[^"']*\1/gi, '')
+        .replace(/\swidth\s*=\s*(["'])[^"']*\1/gi, '')
+
+      return `<th style="border:1px solid #ddd;padding:10px;text-align:left;background:#f8f8f8;font-weight:bold;${cleanAttrs}" >`
+    })
+
+    return processed
+  }
 
   const handleBack = () => {
     Taro.navigateBack()
@@ -61,7 +118,8 @@ export default function NewsDetailPage() {
 
   return (
     <View className="news-detail-container">
-      {/* 头部背景图 */}
+      {/* 封面图片 */}
+      {news.cover && <Image src={news.cover} className="cover-image" mode="aspectFill" />}
 
       {/* 返回按钮 */}
       <View className="back-button" onClick={handleBack}>
@@ -79,7 +137,7 @@ export default function NewsDetailPage() {
 
         {/* 富文本内容区域 */}
         <View className="rich-content">
-          <RichText nodes={news.content} />
+          <RichText nodes={news.content} className="rich-text-content" />
         </View>
       </View>
     </View>
