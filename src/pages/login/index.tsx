@@ -150,81 +150,109 @@ const Login = () => {
     setForm({ ...form, mobile: e.detail.value })
   }
   return (
-    <View className="loginPage">
-      <View className="top">
-        <View className="title">{loginType === 'mobile' ? '验证码登录' : '账号登录'}</View>
+    <View className="login-container">
+      <View className="login-header">
+        <view style={{ marginBottom: '30rpx' }}>
+          <Text className="login-title">欢迎登录</Text>
+        </view>
+        <Text className="login-subtitle">请选择您的登录方式</Text>
       </View>
-      <View className="form">
-        {loginType === 'mobile' ? (
-          <>
-            <Input
-              className="input"
-              type="text"
-              placeholder="请输⼊⼿机号"
-              value={form.mobile}
-              onInput={e => handleInputPhone(e)}
-            />
-            <View className="code">
-              <Input
-                className="password"
-                type="text"
-                password
-                placeholder="请输⼊验证码"
-                value={form.code}
-                onInput={e => handleInputCode(e)}
-              />
-              {!timer ? (
-                <Text className="btn" onClick={sendMobileCode} hidden={timer}>
-                  获取验证码
-                </Text>
-              ) : (
-                <Text className="btn" hidden={!timer}>
-                  {count}秒后重发
-                </Text>
-              )}
-            </View>
-            <Button className="button" onClick={handleLoginClick}>
-              验证码登录
-            </Button>
-          </>
-        ) : (
-          <>
-            <Input
-              className="input"
-              type="text"
-              placeholder="请输入用户名"
-              value={accountForm.username}
-              onInput={e => setAccountForm({ ...accountForm, username: e.detail.value })}
-            />
 
-            <Input
-              className="input"
-              type="text"
-              password
-              placeholder="请输入密码"
-              value={accountForm.password}
-              onInput={e => setAccountForm({ ...accountForm, password: e.detail.value })}
-            />
-            <Button className="button" onClick={handleAccountLogin}>
-              账号密码登录
-            </Button>
-          </>
-        )}
-        {/* <View className="extra">
-          <View className="caption">
-            <Text>其他登录⽅式</Text>
-          </View>
-          <View className="options">
-            <Text className="icon icon-weixin">微信⼀键登录</Text>
-          </View>
-        </View> */}
+      <View className="login-tabs">
         <View
-          className="switch"
-          onClick={() => setLoginType(loginType === 'mobile' ? 'account' : 'mobile')}
+          className={`login-tab ${loginType === 'mobile' ? 'active' : ''}`}
+          onClick={() => setLoginType('mobile')}
         >
-          {loginType === 'mobile' ? '切换到账号登录' : '切换到验证码登录'}
+          短信登录
         </View>
-        <View className="tips">登录/注册即视为同意《服务条款》和《隐私协议》</View>
+        <View
+          className={`login-tab ${loginType === 'account' ? 'active' : ''}`}
+          onClick={() => setLoginType('account')}
+        >
+          账号登录
+        </View>
+      </View>
+
+      <View className="login-form">
+        {loginType === 'mobile' ? (
+          <View className="mobile-login">
+            <View className="input-group">
+              <Text className="input-label">手机号</Text>
+              <Input
+                className="login-input"
+                type="text"
+                placeholder="请输入手机号"
+                value={form.mobile}
+                onInput={e => handleInputPhone(e)}
+              />
+            </View>
+
+            <View className="input-group">
+              <Text className="input-label">验证码</Text>
+              <View className="code-input-container">
+                <Input
+                  className="login-input code-input"
+                  type="text"
+                  placeholder="请输入验证码"
+                  value={form.code}
+                  onInput={e => handleInputCode(e)}
+                />
+                {!timer ? (
+                  <Button
+                    className="send-code-btn"
+                    onClick={sendMobileCode}
+                    disabled={!form.mobile || !isPhoneAvailable(form.mobile)}
+                  >
+                    获取验证码
+                  </Button>
+                ) : (
+                  <Button className="send-code-btn countdown" disabled>
+                    {count}秒后重发
+                  </Button>
+                )}
+              </View>
+            </View>
+
+            <Button className="login-btn" onClick={handleLoginClick}>
+              登录
+            </Button>
+          </View>
+        ) : (
+          <View className="account-login">
+            <View className="input-group">
+              <Text className="input-label">用户名</Text>
+              <Input
+                className="login-input"
+                type="text"
+                placeholder="请输入用户名"
+                value={accountForm.username}
+                onInput={e => setAccountForm({ ...accountForm, username: e.detail.value })}
+              />
+            </View>
+
+            <View className="input-group">
+              <Text className="input-label">密码</Text>
+              <Input
+                className="login-input"
+                type="password"
+                placeholder="请输入密码"
+                value={accountForm.password}
+                onInput={e => setAccountForm({ ...accountForm, password: e.detail.value })}
+              />
+            </View>
+
+            <Button className="login-btn" onClick={handleAccountLogin}>
+              登录
+            </Button>
+          </View>
+        )}
+
+        <View className="agreement">
+          <Text className="agreement-text">登录即视为同意</Text>
+          <Text className="agreement-link">《服务条款》</Text>
+          <Text className="agreement-text">和</Text>
+          <Text className="agreement-link">《隐私协议》</Text>
+        </View>
       </View>
     </View>
   )

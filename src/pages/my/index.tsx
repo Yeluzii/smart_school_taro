@@ -1,9 +1,7 @@
-import { View } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import { AtButton, AtAvatar, AtList, AtListItem } from 'taro-ui'
-
+import { AtButton, AtAvatar } from 'taro-ui'
 import { useAppSelector, useAppDispatch } from '@/store'
-
 import './index.scss'
 import { clearUserInfo } from '@/store/user'
 
@@ -38,44 +36,67 @@ export default function My() {
   ]
 
   return (
-    <>
-      {/* 头像和用户信息区域 */}
-      <View className="home">
+    <View className="profile-container">
+      {/* 顶部背景 */}
+      <View className="header-bg">
+        <View className="decor-circle circle-1"></View>
+        <View className="decor-circle circle-2"></View>
+      </View>
+
+      {/* 用户信息卡片 */}
+      <View className="profile-card">
         <View className="user-info">
-          <AtAvatar className="avatar" circle image={userInfo.avatar} />
+          <View className="avatar-container">
+            <AtAvatar
+              className="avatar"
+              circle
+              image={
+                userInfo.avatar ||
+                'https://pic1.zhimg.com/80/v2-6afa72220d29f045c15217aa6b275808_720w.webp'
+              }
+            />
+          </View>
           <View className="user-details">
-            <View className="name">{userInfo.realName}</View>
-            <View className="family">手机号：{userInfo.mobile}</View>
+            <View className="name">{userInfo.realName || '未登录用户'}</View>
+            <View className="phone">{userInfo.mobile || '请登录查看手机号'}</View>
           </View>
         </View>
-
-        {/* 菜单列表 */}
-        <AtList className="menu-list">
-          {menuItems.map((item, index) => (
-            <AtListItem
-              key={index}
-              title={item.name}
-              arrow="right"
-              onClick={() => Taro.navigateTo({ url: item.link })}
-            />
-          ))}
-        </AtList>
-
-        {/* 用户信息展示和退出登录按钮区域 */}
-        <View className="my">
-          {userInfo.id > 0 ? (
-            <View>
-              <AtButton onClick={handleLogout} className="logout-btn" type="secondary">
-                退出登录
-              </AtButton>
-            </View>
-          ) : (
-            <AtButton onClick={handleClickLogin} type="primary">
-              前往登录
-            </AtButton>
-          )}
-        </View>
       </View>
-    </>
+
+      {/* 菜单列表 */}
+      <View className="menu-container">
+        {menuItems.map((item, index) => (
+          <View
+            key={index}
+            className="menu-item"
+            onClick={() => Taro.navigateTo({ url: item.link })}
+          >
+            <View className="menu-content">
+              <View className="menu-name">{item.name}</View>
+              <View className="menu-arrow">›</View>
+            </View>
+          </View>
+        ))}
+      </View>
+
+      {/* 登录/退出按钮 */}
+      <View className="action-container">
+        {userInfo.id > 0 ? (
+          <AtButton onClick={handleLogout} className="logout-btn">
+            退出登录
+          </AtButton>
+        ) : (
+          <AtButton onClick={handleClickLogin} className="login-btn">
+            前往登录
+          </AtButton>
+        )}
+      </View>
+
+      {/* 底部装饰 */}
+      <View className="footer-decor">
+        <View className="decor-line"></View>
+        <View className="decor-text">个人中心</View>
+      </View>
+    </View>
   )
 }
