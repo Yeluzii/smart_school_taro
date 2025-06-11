@@ -60,6 +60,7 @@
     text-align: center;
     padding: 0 15px;
     border: none;
+    margin: 10px;
     transition: all 0.3s ease;
     .nav-text {
       font-size: 34px;
@@ -206,3 +207,32 @@
     .status-dot { background: #9e9e9e; }
   }
 }
+
+.float-refresh-btn {
+  position: fixed;
+  bottom: 60px;
+  right: 20px;
+  z-index: 1000;
+  width: 70px;
+  height: 70px;
+  background: rgb(0, 55, 255);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s;
+  .refresh-icon {
+    padding: 8px;  // 增加内边距
+    transition: transform 0.3s ease-in-out;
+  }
+
+  &:active {
+    transform: scale(0.9);
+    opacity: 0.8;
+    .refresh-icon {
+      transform: rotate(360deg);  // 添加旋转动画
+    }
+  }
+}
+
