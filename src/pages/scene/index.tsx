@@ -1,6 +1,6 @@
 import { View, Text, ScrollView } from "@tarojs/components"
 import Taro from "@tarojs/taro"
-import { AtSearchBar } from "taro-ui" // 添加搜索组件
+import { AtSearchBar, AtIcon } from "taro-ui" // 添加搜索组件
 import { useEffect, useState } from "react"
 import { getGroup, getGroupDevices } from "@/service/group"
 import { useAppSelector } from '@/store'
@@ -40,6 +40,13 @@ const DeviceManager = () => {
     const res = (await getGroupDevices(groupId)).data
     setDeviceData(res)
   }
+  // 新增刷新方法
+  const handleRefresh = async () => {
+    setActiveGroup(0);
+    setSearchValue('');
+    await getGroups();
+    await getDevices(0);
+  };
   useEffect(() => {
     getGroups()
   }, []);
@@ -48,7 +55,7 @@ const DeviceManager = () => {
   }, [activeGroup]);
   useEffect(() => {
     const total = deviceData.length;
-    const online = deviceData.filter(device => device.runningStatus === 0).length;
+    const online = deviceData.filter(device => device.runningStatus === 1).length;
     const active = deviceData.filter(device => device.runningStatus === 1).length;
     setStats({ total, online, active });
   }, [deviceData]);
@@ -70,6 +77,12 @@ const DeviceManager = () => {
 
   return (
     <View className="device-manager-container">
+      <View
+        className="float-refresh-btn"
+        onClick={handleRefresh}
+      >
+        <AtIcon value="reload" size={24} color="#fff" className="refresh-icon" />
+      </View>
       {/* 顶部统计卡片 */}
       <View className="stats-container">
         <View className="stat-card">
