@@ -1,25 +1,36 @@
 import { View, Text, ScrollView } from "@tarojs/components"
 import Taro from "@tarojs/taro"
-import { AtIcon } from "taro-ui"
+import { AtSearchBar } from "taro-ui" // 添加搜索组件
 import { useEffect, useState } from "react"
 import { getGroup, getGroupDevices } from "@/service/group"
 import { useAppSelector } from '@/store'
 import './index.scss'
-const Scene = () => {
+import { AtButton } from 'taro-ui';
+
+const DeviceManager = () => {
   const [groupData, setGroupData] = useState<GroupVO[]>([
-    { id: 1, name: '客厅' },
-    { id: 2, name: '厨房' },
-    { id: 3, name: '卧室' },
-    { id: 4, name: '书房' },
-    { id: 5, name: '餐厅' },
-  ])
+    { id: 0, name: '全部' },
+    { id: 1, name: '教室' },
+    { id: 2, name: '工作室' },
+    { id: 3, name: '未分组' },
+  ]);
   const [deviceData, setDeviceData] = useState<GroupDeviceVO[]>([
-    { id: 1, name: '灯', runningStatus: 1 },
-    { id: 2, name: '电视', runningStatus: 0 },
-    { id: 3, name: '空调', runningStatus: 1 },
-    { id: 4, name: '音响', runningStatus: 1 },
-  ])
-  const [activeGroup, setActiveGroup] = useState(1);
+    { id: 1, name: '温湿度', runningStatus: 0 },
+    { id: 2, name: '智能灯', runningStatus: 0 },
+  ]);
+  const [activeGroup, setActiveGroup] = useState(0);
+  const [searchValue, setSearchValue] = useState('');
+  // 统计数据
+  type Stats = {
+    total: number,
+    online: number,
+    active: number
+  };
+  const [stats, setStats] = useState<Stats>({
+    total: 0,
+    online: 0,
+    active: 0
+  });
   const userId = useAppSelector(state => state.user.userInfo.id)
   const getGroups = async () => {
     const res = (await getGroup(userId)).data
@@ -35,64 +46,101 @@ const Scene = () => {
   useEffect(() => {
     getDevices(activeGroup)
   }, [activeGroup]);
-
+  useEffect(() => {
+    const total = deviceData.length;
+    const online = deviceData.filter(device => device.runningStatus === 0).length;
+    const active = deviceData.filter(device => device.runningStatus === 1).length;
+    setStats({ total, online, active });
+  }, [deviceData]);
   const navigateToDevice = (deviceId) => {
     Taro.navigateTo({
       url: `/pages/control/index?id=${deviceId}`
     });
   };
-  return (
-    <View>
 
-      <View className='nav-container'>
-        <View className='nav-tabs'>
-          <ScrollView
-            className='nav-scroll'
-            scrollX
-            scrollWithAnimation
-            enableFlex
-          >
-            {groupData.map(group => (
-              <View
-                key={group.id}
-                className={`nav-item ${activeGroup === group.id ? 'active' : ''}`}
-                style={{ width: '25%' }}
-                onClick={() => {
-                  setActiveGroup(group.id)
-                }}
-              >
-                <Text className='nav-text'>{group.name}</Text>
-                <View className='nav-indicator' />
-              </View>
-            ))}
-          </ScrollView>
+  const [filteredDeviceList, setFilteredDeviceList] = useState(deviceData);
+
+  const handleSearch = (value) => {
+    setSearchValue(value);
+    const filtered = deviceData.filter(device =>
+      device.name.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredDeviceList(filtered);
+  };
+
+  return (
+    <View className="device-manager-container">
+      {/* 顶部统计卡片 */}
+      <View className="stats-container">
+        <View className="stat-card">
+          <Text className="stat-value">{stats.total}</Text>
+          <Text className="stat-label">设备总数</Text>
+        </View>
+        <View className="stat-card">
+          <Text className="stat-value">{stats.online}</Text>
+          <Text className="stat-label">在线设备</Text>
+        </View>
+        <View className="stat-card">
+          <Text className="stat-value">{stats.active}</Text>
+          <Text className="stat-label">活跃设备</Text>
         </View>
       </View>
-      <ScrollView scrollY
-        style={{
-          height: 'calc(100vh - 100px)'
-        }}
-        className='device-list'>
-        {
-          deviceData.map(device => (
-            <View key={device.id} className='device-card' onClick={() => navigateToDevice(device.id)}>
-              <View className="device-content">
+
+      {/* 分组标签栏 */}
+      <View className='nav-container'>
+        <ScrollView
+          className='nav-scroll'
+          scrollX
+          scrollWithAnimation
+          enableFlex
+        >
+          {groupData.map(group => (
+            // 替换原View组件为可点击组件
+            <AtButton
+              key={group.id}
+              className={`nav-item ${activeGroup === group.id ? 'active' : ''}`}
+              onClick={() => setActiveGroup(group.id)}
+              customStyle={{ padding: '0', background: 'transparent' }}
+            >
+              <Text className='nav-text'>{group.name}</Text>
+              <View className='nav-indicator' />
+            </AtButton>
+          ))}
+        </ScrollView>
+      </View>
+
+      {/* 搜索栏 */}
+      <View className="search-container">
+        <AtSearchBar
+          value={searchValue}
+          onChange={handleSearch}
+          placeholder="搜索设备"
+        />
+      </View>
+
+      {/* 设备列表区域 */}
+      <View className="section-container">
+        <Text className="section-title">最新添加</Text>
+        <View className='device-container'>
+          {(searchValue === '' ? deviceData : filteredDeviceList).map(device => (
+            <View
+              key={device.id}
+              className='device-card'
+              onClick={() => navigateToDevice(device.id)}
+            >
+              <View className="device-info">
                 <Text className="device-name">{device.name}</Text>
-                <View className="device-meta">
-                  <AtIcon value="location" size={16} color="#666" />
-                  <View className={`status-tag ${device.runningStatus}`}>
-                    <View className="status-dot" />
-                    <Text>{device.runningStatus === 1 ? '运转中' : '已离线'}</Text>
-                  </View>
+                <View className={`status-tag ${device.runningStatus === 1 ? 'online' : 'offline'}`}>
+                  <View className="status-dot" />
+                  <Text>{device.runningStatus === 0 ? '离线' : '在线'}</Text>
                 </View>
               </View>
             </View>
-          ))
-        }
-      </ScrollView>
-
+          ))}
+        </View>
+      </View>
     </View>
   )
 }
 
-export default Scene
+export default DeviceManager
