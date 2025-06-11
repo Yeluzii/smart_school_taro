@@ -11,7 +11,6 @@ export default defineAppConfig({
     'pages/revise/index',
     'pages/news/index',
     'pages/changepassword/index',
-    'pages/control/index',
   ],
   window: {
     backgroundTextStyle: 'light',
