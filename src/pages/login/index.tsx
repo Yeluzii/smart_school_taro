@@ -126,7 +126,7 @@ const Login = () => {
     const res = await mobileLogin(form)
     if (res.code === 0) {
       Taro.setStorageSync('token', res.data.accessToken)
-      getLoginUserInfo()
+      await getLoginUserInfo()
       Taro.showModal({
         title: '登录成功',
         success: () => {
@@ -140,7 +140,6 @@ const Login = () => {
         title: res.msg,
         icon: 'none',
       })
-      return
     }
   }
   const handleInputCode = e => {
