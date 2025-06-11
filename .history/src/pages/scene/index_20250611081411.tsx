@@ -35,7 +35,6 @@ const Scene = () => {
   useEffect(() => {
     getDevices(activeGroup)
   }, [activeGroup]);
-
   const navigateToDevice = (deviceId) => {
     Taro.navigateTo({
       url: `/pages/control/index?id=${deviceId}`
