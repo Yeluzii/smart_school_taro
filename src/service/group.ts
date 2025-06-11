@@ -21,3 +21,9 @@ export const sendCommand = (deviceId: number, command: string) => {
     url: `/app_iot/api/device/control?deviceId=${deviceId}&command=${command}`,
   })
 }
+export const getDeviceStatus = (deviceId: number) => {
+  return http<DeviceStatusVO>({
+    method: 'GET',
+    url: `/app_iot/api/device/${deviceId}`,
+  })
+}
