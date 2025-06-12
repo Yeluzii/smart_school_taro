@@ -70,55 +70,56 @@ page {
   }
 }
 
-
-.nickNamePopup {
-  padding: 30rpx;
-  border-radius: 30rpx;
-
+.editPopup {
   .container {
-    padding: 30rpx;
     background: #fff;
     border-radius: 20rpx;
+    padding: 40rpx;
 
     .popHeader {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 30rpx;
 
       .title {
-        color: #1296db;
-        font-size: 26rpx;
+        color: #333;
+        font-size: 32rpx;
+        font-weight: 500;
       }
 
       .close {
-        padding: 6rpx;
+        padding: 10rpx;
+        cursor: pointer;
       }
     }
 
     .content {
-      padding: 30rpx 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      padding: 20rpx 0 40rpx;
 
       .input {
         width: 100%;
-        height: 100rpx;
+        height: 80rpx;
         font-size: 28rpx;
-        border-bottom: 1px solid #ddd;
-        margin-bottom: 20rpx;
+        padding: 0 20rpx;
+        border-radius: 8rpx;
+        background: #f5f5f5;
       }
     }
 
     .footer {
-      padding: 10rpx 0;
       display: flex;
-      align-items: center;
       justify-content: center;
 
       .submit-btn {
-        background-color: #1296db;
+        width: 240rpx;
+        height: 80rpx;
+        line-height: 80rpx;
+        text-align: center;
+        background: #1296db;
         color: #fff;
+        border-radius: 40rpx;
+        font-size: 28rpx;
       }
     }
   }

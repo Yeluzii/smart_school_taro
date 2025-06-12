@@ -14,15 +14,23 @@ type MobileLoginVO = {
 }
 type UserVO = {
   id: number
+  realName: string
   mobile: string
-  nickname: string
+  username: string
   avatar: string
   gender: number
   createTime: string
+  email: string
 }
+
 type AccountLoginDTO = {
   username: string
+  realName: string
   password: string
+  mobile: string
+  avatar: string
+  gender: number
+  email: string
 }
 type AccountLoginVO = {
   id: number
@@ -32,7 +40,7 @@ type AccountLoginVO = {
 
 type UserDTO = {
   id: number
-  nickname: string
+  realName: string
   avatar: string
   gender: number
 }
@@ -40,4 +48,14 @@ type UserDTO = {
 type TenantVO = {
   id: number
   tenantName: string
+}
+// user.d.ts
+export type ChangePasswordDTO = {
+  newPassword: string
+}
+
+export interface Result<T> {
+  code: number
+  message: string
+  data: T
 }

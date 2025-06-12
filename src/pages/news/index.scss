@@ -1,0 +1,312 @@
+/* 全局变量 */
+$primary-color: #6190E8;
+$secondary-color: #78C3FB;
+$text-color: #333;
+$light-text: #666;
+$border-color: #eee;
+$card-shadow: 0 8rpx 30rpx rgba(0,0,0,0.08);
+$header-height: 320rpx;
+
+/* 详情页样式 */
+.news-detail-container {
+  position: relative;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  padding-bottom: 40rpx;
+  overflow: hidden;
+}
+
+/* 封面图片 */
+.cover-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $header-height;
+  z-index: 1;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80rpx;
+    background: linear-gradient(to top, #f5f7fa, transparent);
+  }
+}
+
+/* 返回按钮 */
+.back-button {
+  position: fixed;
+  top: 80rpx;
+  left: 30rpx;
+  width: 80rpx;
+  height: 80rpx;
+  background: rgba(0,0,0,0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  backdrop-filter: blur(10rpx);
+}
+
+/* 内容卡片 */
+.content-card {
+  position: relative;
+  z-index: 2;
+  background: #fff;
+  border-radius: 32rpx 32rpx 0 0;
+  margin-top: $header-height - 100rpx;
+  padding: 60rpx 32rpx 40rpx;
+  box-shadow: $card-shadow;
+}
+
+.title-section {
+  text-align: center;
+  padding-bottom: 30rpx;
+  border-bottom: 1rpx solid $border-color;
+  margin-bottom: 40rpx;
+
+  .title {
+    font-size: 44rpx;
+    font-weight: 700;
+    line-height: 1.5;
+    color: $text-color;
+    margin-bottom: 24rpx;
+  }
+
+  .meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .date {
+      font-size: 28rpx;
+      color: $light-text;
+      display: flex;
+
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 8rpx;
+        height: 8rpx;
+        background: $primary-color;
+        border-radius: 50%;
+        margin-right: 12rpx;
+      }
+    }
+  }
+}
+
+/* 富文本内容美化 - 重点优化 */
+.rich-content {
+  overflow: visible;
+
+  // 富文本容器
+  .rich-text-content {
+    font-size: 32rpx;
+    line-height: 1.8;
+    color: #444;
+    overflow: visible;
+    word-break: break-word;
+
+    // 图片样式优化 - 修复大图问题
+    img {
+      display: block !important;
+      max-width: 100% !important;
+      width: auto !important;
+      height: auto !important;
+      margin: 20rpx auto !important;
+      border-radius: 8rpx;
+      box-sizing: border-box;
+      max-height: 300rpx !important;
+    }
+
+    // 表格优化 - 重点修复
+    table {
+      width: 100% !important;
+      max-width: 100% !important;
+      border-collapse: collapse !important;
+      margin: 30rpx 0 !important;
+      border-radius: 8rpx;
+      overflow: hidden;
+      box-shadow: 0 4rpx 10rpx rgba(0,0,0,0.05);
+      display: table;
+      border: 1rpx solid #ddd;
+
+      th, td {
+        padding: 20rpx !important;
+        text-align: left !important;
+        border: 1rpx solid #ddd !important;
+        font-size: 28rpx;
+        line-height: 1.6;
+        vertical-align: top;
+      }
+
+      th {
+        background: #f0f7ff !important;
+        font-weight: 600 !important;
+        color: $primary-color !important;
+      }
+    }
+
+    // 段落样式
+    p {
+      margin: 30rpx 0;
+      text-align: justify;
+      word-break: break-word;
+    }
+
+    // 标题样式
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 700;
+      margin: 40rpx 0 20rpx;
+      color: $text-color;
+      line-height: 1.4;
+    }
+
+    h1 { font-size: 40rpx; }
+    h2 { font-size: 38rpx; }
+    h3 { font-size: 36rpx; }
+    h4 { font-size: 34rpx; }
+
+    // 列表样式
+    ul, ol {
+      padding-left: 40rpx;
+      margin: 25rpx 0;
+
+      li {
+        margin: 15rpx 0;
+        padding-left: 10rpx;
+      }
+    }
+
+    ul li {
+      list-style-type: disc;
+    }
+
+    ol li {
+      list-style-type: decimal;
+    }
+
+    // 引用样式
+    blockquote {
+      border-left: 8rpx solid $secondary-color;
+      background: #f0f7ff;
+      padding: 25rpx 30rpx;
+      margin: 30rpx 0;
+      border-radius: 0 8rpx 8rpx 0;
+      font-style: italic;
+
+      p {
+        margin: 0;
+        color: $light-text;
+      }
+    }
+
+    // 代码块样式
+    pre {
+      background: #2d2d2d;
+      color: #f8f8f2;
+      padding: 20rpx;
+      border-radius: 8rpx;
+      overflow-x: auto;
+      margin: 25rpx 0;
+      font-family: 'Courier New', monospace;
+      font-size: 28rpx;
+    }
+
+    // 链接样式
+    a {
+      color: $primary-color;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+/* 错误状态 */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  padding: 40rpx;
+
+  .error-text {
+    font-size: 36rpx;
+    color: #F56C6C;
+    margin: 40rpx 0 60rpx;
+  }
+
+  .back-button {
+    position: relative;
+    background: $primary-color;
+    color: #fff;
+    padding: 20rpx 50rpx;
+    border-radius: 50rpx;
+    font-size: 32rpx;
+    display: flex;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+
+    text {
+      margin-left: 10rpx;
+    }
+  }
+}
+
+/* 响应式调整 */
+@media (max-width: 600px) {
+  .cover-image {
+    height: 280rpx;
+  }
+
+  .content-card {
+    padding: 50rpx 20rpx 30rpx;
+    margin-top: $header-height - 80rpx;
+  }
+
+  .title-section .title {
+    font-size: 36rpx;
+  }
+
+  .rich-content .rich-text-content {
+    font-size: 30rpx;
+
+    h1 { font-size: 36rpx; }
+    h2 { font-size: 34rpx; }
+    h3 { font-size: 32rpx; }
+    h4 { font-size: 30rpx; }
+
+    table {
+      th, td {
+        padding: 15rpx !important;
+        font-size: 26rpx;
+      }
+    }
+
+    // 在小屏幕上减小图片边距
+    img {
+      margin: 15rpx auto !important;
+      max-height: 250rpx !important;
+    }
+  }
+}

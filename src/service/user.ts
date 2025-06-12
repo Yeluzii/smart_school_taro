@@ -1,5 +1,6 @@
 import { http } from '@/utils/http'
 import Taro from '@tarojs/taro'
+
 export const sendCode = (mobile: string) => {
   return http<null>({
     method: 'POST',
@@ -61,5 +62,15 @@ export const getTopOrgList = (name: string) => {
   return http<TenantVO[]>({
     method: 'GET',
     url: `/sys/tenant/list?name=${name}`,
+  })
+}
+export const changePassword = (data: ChangePasswordDTO) => {
+  return http<Result<null>>({
+    method: 'POST',
+    url: `/app/user/change-password`,
+    data: data,
+    header: {
+      Authorization: Taro.getStorageSync('token'),
+    },
   })
 }
